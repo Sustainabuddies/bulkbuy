@@ -3,6 +3,7 @@
 const db = require('../server/db')
 const {User} = require('../server/db/models')
 const {Trip} = require('../server/db/models')
+const {Rating} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -64,10 +65,31 @@ async function seed() {
   const trip1 = trips[0][0]
   const trip2 = trips[0][1]
 
+  const ratings = await Promise.all([
+    Rating.bulkCreate(
+      [
+        {
+          rating: 5
+        },
+        {
+          rating: 1
+        }
+      ],
+      {returning: true}
+    )
+  ])
+  //Promise returns an array with an array of rating objects
+  const rating1 = ratings[0][0]
+  const rating2 = ratings[0][1]
+
   await trip1.setBuyer(user1)
   await trip1.addSubscriber(user2)
   await trip2.setBuyer(user2)
   await trip2.addSubscriber(user1)
+  await rating1.setUser(user1)
+  await rating1.setRater(user2)
+  await rating2.setUser(user2)
+  await rating2.setRater(user1)
 
   console.log(`seeded ${users.length} users, ${trips.length} trips`)
   console.log(`seeded successfully`)

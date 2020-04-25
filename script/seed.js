@@ -2,17 +2,57 @@
 
 const db = require('../server/db')
 const {User} = require('../server/db/models')
+const {Trip} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
   const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
+    User.create({
+      email: 'cody@email.com',
+      password: '123',
+      username: 'cody4lyfe',
+      streetAddress: '89 E 42nd St',
+      city: 'New York',
+      state: 'New York',
+      zip: '10017'
+    }),
+    User.create({
+      email: 'murphy@email.com',
+      password: '123',
+      username: 'murphyDog',
+      streetAddress: '405 Lexington Ave',
+      city: 'New York',
+      state: 'New York',
+      zip: '10174'
+    })
   ])
 
-  console.log(`seeded ${users.length} users`)
+  const trips = await Promise.all([
+    Trip.create({
+      exchangePointLatitude: 40.791287,
+      exchangePointLongitude: -73.974167,
+      storeName: 'Costco',
+      storeLatitude: 40.715435,
+      storeLongitude: -73.965895,
+      tripDate: new Date()
+    }),
+    Trip.create({
+      exchangePointLatitude: 40.794349,
+      exchangePointLongitude: -73.972322,
+      storeName: 'BJs',
+      storeLatitude: 40.719078,
+      storeLongitude: -74.010613,
+      tripDate: new Date()
+    })
+  ])
+  await trips[0].setBuyer(users[0])
+  await trips[0].addSubscriber(users[1])
+  await trips[1].setBuyer(users[1])
+  await trips[1].addSubscriber(users[0])
+
+  console.log(`seeded ${users.length} users, ${trips.length} trips`)
   console.log(`seeded successfully`)
 }
 

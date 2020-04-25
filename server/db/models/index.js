@@ -1,23 +1,23 @@
 const User = require('./user')
-const ListItem = require('./list-item')
+// const ListItem = require('./list-item')
 const Trip = require('./trip')
-const Rating = require('./rating')
+// const Rating = require('./rating')
 
-User.belongsToMany(Trip, {as: 'Subscriber', through: 'TripSubscribers'})
-Trip.belongsToMany(User, {as: 'SubscriberTrip', through: 'TripSubscribers'})
+User.belongsToMany(Trip, {as: 'subscriber', through: 'trip_subscribers'})
+Trip.belongsToMany(User, {as: 'subscriber', through: 'trip_subscribers'})
 
-User.hasMany(Trip, {as: 'Buyer'})
-Trip.belongsTo(User)
+User.hasMany(Trip, {as: 'buyer'})
+Trip.belongsTo(User, {as: 'buyer'})
 
-Trip.hasMany(ListItem)
-ListItem.belongsTo(Trip)
+// Trip.hasMany(ListItem)
+// ListItem.belongsTo(Trip)
 
-ListItem.hasOne(User)
-User.belongsTo(ListItem)
+// ListItem.hasOne(User)
+// User.belongsTo(ListItem)
 
 module.exports = {
   User,
-  ListItem,
-  Trip,
-  Rating
+  // ListItem,
+  Trip
+  // Rating
 }

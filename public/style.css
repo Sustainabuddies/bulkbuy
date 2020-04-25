@@ -19,3 +19,31 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+/* jenna's styling */
+
+.main {
+  text-align: center;
+}
+
+.home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  max-width: 25%;
+  margin: 1em;
+  padding: 2em;
+  background-color: white;
+  border-radius: 3em;
+  border: 1px solid black;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: rgb(218, 216, 216);
+}

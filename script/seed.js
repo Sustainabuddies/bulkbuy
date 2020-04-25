@@ -1,34 +1,74 @@
 'use strict'
 
 const db = require('../server/db');
-const { User, ListItem } = require('../server/db/models');
+const { User, ListItem, Trip } = require('../server/db/models');
 
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
   const users = await Promise.all([
-    User.create({
-      email: 'cody@email.com',
-      password: '123',
-      username: 'cody4lyfe',
-      streetAddress: '89 E 42nd St',
-      city: 'New York',
-      state: 'New York',
-      zip: '10017'
-    }),
-    User.create({
-      email: 'murphy@email.com',
-      password: '123',
-      username: 'murphyDog',
-      streetAddress: '405 Lexington Ave',
-      city: 'New York',
-      state: 'New York',
-      zip: '10174'
-    })
+    User.bulkCreate(
+      [
+        {
+          email: 'cody@email.com',
+          password: '123',
+          username: 'cody4lyfe',
+          streetAddress: '89 E 42nd St',
+          city: 'New York',
+          state: 'New York',
+          zip: '10017'
+        },
+        {
+          email: 'murphy@email.com',
+          password: '123',
+          username: 'murphyDog',
+          streetAddress: '405 Lexington Ave',
+          city: 'New York',
+          state: 'New York',
+          zip: '10174'
+        }
+      ],
+      {returning: true}
+    )
   ])
+  //Promise returns an array with an array of user objects
+  const user1 = users[0][0]
+  const user2 = users[0][1]
 
-  console.log(`seeded ${users.length} users`)
+  const trips = await Promise.all([
+    Trip.bulkCreate(
+      [
+        {
+          exchangePointLatitude: 40.791287,
+          exchangePointLongitude: -73.974167,
+          storeName: 'Costco',
+          storeLatitude: 40.715435,
+          storeLongitude: -73.965895,
+          tripDate: new Date()
+        },
+        {
+          exchangePointLatitude: 40.794349,
+          exchangePointLongitude: -73.972322,
+          storeName: 'BJs',
+          storeLatitude: 40.719078,
+          storeLongitude: -74.010613,
+          tripDate: new Date()
+        }
+      ],
+      {returning: true}
+    )
+  ])
+  //Promise returns an array with an array of trip objects
+  const trip1 = trips[0][0]
+  const trip2 = trips[0][1]
+
+  await trip1.setBuyer(user1)
+  await trip1.addSubscriber(user2)
+  await trip2.setBuyer(user2)
+  await trip2.addSubscriber(user1)
+
+  console.log(`seeded ${users.length} users, ${trips.length} trips`)
   console.log(`seeded successfully`)
 
   const listItems = await Promise.all([

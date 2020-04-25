@@ -10,8 +10,16 @@ const Trip = db.define('trip', {
     type: Sequelize.INTEGER,
     allowNull: false
   },
-  store: {
+  storeName: {
     type: Sequelize.STRING,
+    allowNull: false
+  },
+  storeLatitude: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  storeLongitude: {
+    type: Sequelize.INTEGER,
     allowNull: false
   },
   tripDate: {

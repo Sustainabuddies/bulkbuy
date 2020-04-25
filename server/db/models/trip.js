@@ -14,6 +14,10 @@ const Trip = db.define('trip', {
     type: Sequelize.STRING,
     allowNull: false
   },
+  tripDate: {
+    type: Sequelize.DATE,
+    allowNull: false
+  },
   active: {
     type: Sequelize.BOOLEAN,
     allowNull: false,

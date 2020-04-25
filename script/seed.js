@@ -1,7 +1,7 @@
 'use strict'
 
-const db = require('../server/db')
-const {User} = require('../server/db/models')
+const db = require('../server/db');
+const { User, ListItem } = require('../server/db/models');
 
 async function seed() {
   await db.sync({force: true})
@@ -29,6 +29,35 @@ async function seed() {
   ])
 
   console.log(`seeded ${users.length} users`)
+  console.log(`seeded successfully`)
+
+  const listItems = await Promise.all([
+    ListItem.create({
+      tripId: 1,
+      userId: 1,
+      type: 'buyer',
+      name: 'toilet paper',
+      price: 0.84,
+      qtyAvailable: 5,
+      qtyTotal: 5,
+      unitType: 'rolls',
+      isAccepted: 'approved'
+    }),
+    ListItem.create({
+      tripId: 1,
+      userId: 2,
+      type: 'subscriber',
+      name: 'toilet paper',
+      price: 0.84,
+      qtyAvailable: 0,
+      qtyTotal: 5,
+      unitType: 'rolls',
+      isAccepted: 'approved',
+      amountDue: 4.20
+    })
+  ])
+
+  console.log(`seeded ${listItems.length} list items`)
   console.log(`seeded successfully`)
 }
 

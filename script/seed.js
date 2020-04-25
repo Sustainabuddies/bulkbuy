@@ -1,9 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User} = require('../server/db/models')
-const {Trip} = require('../server/db/models')
-const {Rating} = require('../server/db/models')
+const {User, Trip, Rating, ListItem} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -48,7 +46,7 @@ async function seed() {
           storeLatitude: 40.715435,
           storeLongitude: -73.965895,
           tripDate: new Date(),
-          buyerId: user1
+          buyerId: 1
         },
         {
           exchangePointLatitude: 40.794349,
@@ -57,7 +55,7 @@ async function seed() {
           storeLatitude: 40.719078,
           storeLongitude: -74.010613,
           tripDate: new Date(),
-          subscriberId: user2
+          buyerId: 2
         }
       ],
       {returning: true}
@@ -88,10 +86,61 @@ async function seed() {
   await trip1.addSubscriber(user2)
   await trip2.addSubscriber(user1)
 
+  const listItems = await Promise.all([
+    ListItem.bulkCreate([
+      {
+        tripId: 1,
+        userId: 1,
+        type: 'buyer',
+        name: 'toilet paper',
+        price: 0.84,
+        qtyAvailable: 5,
+        qtyTotal: 5,
+        unitType: 'rolls',
+        isAccepted: 'approved'
+      },
+      {
+        tripId: 1,
+        userId: 2,
+        type: 'subscriber',
+        name: 'toilet paper',
+        price: 0.84,
+        qtyAvailable: 0,
+        qtyTotal: 5,
+        unitType: 'rolls',
+        isAccepted: 'approved',
+        amountDue: 4.2
+      },
+      {
+        tripId: 2,
+        userId: 2,
+        type: 'buyer',
+        name: 'water bottle',
+        price: 0.84,
+        qtyAvailable: 5,
+        qtyTotal: 5,
+        unitType: 'bottles',
+        isAccepted: 'approved'
+      },
+      {
+        tripId: 2,
+        userId: 1,
+        type: 'subscriber',
+        name: 'water bottle',
+        price: 0.84,
+        qtyAvailable: 0,
+        qtyTotal: 5,
+        unitType: 'bottles',
+        isAccepted: 'approved',
+        amountDue: 4.2
+      }
+    ])
+  ])
+
   console.log(
     `seeded ${users.length} users, ${trips.length} trips, ${
       ratings.length
-    } ratings`
+    } ratings, ${listItems.length} list items`
   )
   console.log(`seeded successfully`)
 }

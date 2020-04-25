@@ -47,7 +47,8 @@ async function seed() {
           storeName: 'Costco',
           storeLatitude: 40.715435,
           storeLongitude: -73.965895,
-          tripDate: new Date()
+          tripDate: new Date(),
+          buyerId: user1
         },
         {
           exchangePointLatitude: 40.794349,
@@ -55,7 +56,8 @@ async function seed() {
           storeName: 'BJs',
           storeLatitude: 40.719078,
           storeLongitude: -74.010613,
-          tripDate: new Date()
+          tripDate: new Date(),
+          subscriberId: user2
         }
       ],
       {returning: true}
@@ -69,29 +71,28 @@ async function seed() {
     Rating.bulkCreate(
       [
         {
-          rating: 5
+          rating: 5,
+          userId: 1,
+          raterId: 2
         },
         {
-          rating: 1
+          rating: 1,
+          userId: 2,
+          raterId: 1
         }
       ],
       {returning: true}
     )
   ])
-  //Promise returns an array with an array of rating objects
-  const rating1 = ratings[0][0]
-  const rating2 = ratings[0][1]
 
-  await trip1.setBuyer(user1)
   await trip1.addSubscriber(user2)
-  await trip2.setBuyer(user2)
   await trip2.addSubscriber(user1)
-  await rating1.setUser(user1)
-  await rating1.setRater(user2)
-  await rating2.setUser(user2)
-  await rating2.setRater(user1)
 
-  console.log(`seeded ${users.length} users, ${trips.length} trips`)
+  console.log(
+    `seeded ${users.length} users, ${trips.length} trips, ${
+      ratings.length
+    } ratings`
+  )
   console.log(`seeded successfully`)
 }
 

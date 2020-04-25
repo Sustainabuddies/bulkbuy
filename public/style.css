@@ -47,7 +47,7 @@ button:hover {
 }
 
 /* LOGIN / SIGNUP */
-#formElements {
+#form-elements {
   display: flex;
   flex-direction: column;
 }

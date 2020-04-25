@@ -45,3 +45,9 @@ button {
 button:hover {
   background-color: rgb(218, 216, 216);
 }
+
+/* LOGIN / SIGNUP */
+#formElements {
+  display: flex;
+  flex-direction: column;
+}

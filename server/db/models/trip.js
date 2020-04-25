@@ -3,11 +3,11 @@ const db = require('../db')
 
 const Trip = db.define('trip', {
   exchangePointLatitude: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.DECIMAL,
     allowNull: false
   },
   exchangePointLongitude: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.DECIMAL,
     allowNull: false
   },
   storeName: {
@@ -15,11 +15,11 @@ const Trip = db.define('trip', {
     allowNull: false
   },
   storeLatitude: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.DECIMAL,
     allowNull: false
   },
   storeLongitude: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.DECIMAL,
     allowNull: false
   },
   tripDate: {

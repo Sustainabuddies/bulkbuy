@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 
 import {Map, GoogleApiWrapper, Marker} from 'google-maps-react'
+import InfoWindowEx from './info-window'
 import {googleApiKey} from '../../secrets'
 
 const SelectStore = props => {
@@ -11,6 +12,11 @@ const SelectStore = props => {
   })
   const [searchQuery, setSearchQuery] = useState('')
   const [markers, setMarkers] = useState([])
+  const [infoWindow, setInfoWindow] = useState({
+    activeMarker: null,
+    isVisible: false,
+    data: {}
+  })
 
   useEffect(() => {
     if (navigator && navigator.geolocation) {
@@ -43,6 +49,20 @@ const SelectStore = props => {
     setSearchQuery('')
   }
 
+  const onMarkerClick = (props, marker, e) => {
+    setInfoWindow({
+      activeMarker: marker,
+      isVisible: true,
+      data: props
+    })
+  }
+
+  const selectAndPostStore = location => {
+    console.log(location.lat(), location.lng())
+    // post to DB trip model
+    // redirect to next interface
+  }
+
   return (
     <div className="select-store">
       <form className="select-store__form" onSubmit={handleSubmit}>
@@ -71,13 +91,31 @@ const SelectStore = props => {
             }}
           >
             {markers
-              ? markers.map(marker => (
+              ? markers.map((marker, idx) => (
                   <Marker
+                    key={idx}
+                    onClick={onMarkerClick}
                     name={marker.name}
+                    address={marker.formatted_address}
                     position={marker.geometry.location}
                   />
                 ))
               : null}
+            <InfoWindowEx
+              marker={infoWindow.activeMarker}
+              visible={infoWindow.isVisible}
+            >
+              <div>
+                <h3>{infoWindow.data.name}</h3>
+                <p>{infoWindow.data.address}</p>
+                <button
+                  onClick={() => selectAndPostStore(infoWindow.data.position)}
+                  type="button"
+                >
+                  Select this Store
+                </button>
+              </div>
+            </InfoWindowEx>
           </Map>
         ) : (
           'Please share your location to use this app!'

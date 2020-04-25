@@ -10,6 +10,7 @@ const SelectStore = props => {
     longitude: 0
   })
   const [searchQuery, setSearchQuery] = useState('')
+  const [markers, setMarkers] = useState([])
 
   useEffect(() => {
     if (navigator && navigator.geolocation) {
@@ -23,13 +24,23 @@ const SelectStore = props => {
     }
   }, [])
 
-  const handleSubmit = async evt => {
+  const handleSubmit = evt => {
     evt.preventDefault()
-    const map = new google.maps.Map()
-    const service = new google.maps.places.PlacesService(map)
-    service.textSearch({query: searchQuery}, (results, status) =>
-      console.log(results)
+    const tempMap = new google.maps.Map(document.getElementById('tempMap'))
+    const search = new google.maps.places.PlacesService(tempMap)
+    const location = new google.maps.LatLng(
+      currentLocation.latitude,
+      currentLocation.longitude
     )
+    search.textSearch(
+      {
+        query: searchQuery,
+        location,
+        radius: 10000
+      },
+      (response, status) => setMarkers(response.slice(0, 3))
+    )
+    setSearchQuery('')
   }
 
   return (
@@ -49,8 +60,6 @@ const SelectStore = props => {
         </button>
       </form>
 
-      <div id="map" />
-
       <div className="select-store__map">
         {currentLocation.latitude ? (
           <Map
@@ -60,11 +69,22 @@ const SelectStore = props => {
               lat: currentLocation.latitude,
               lng: currentLocation.longitude
             }}
-          />
+          >
+            {markers
+              ? markers.map(marker => (
+                  <Marker
+                    name={marker.name}
+                    position={marker.geometry.location}
+                  />
+                ))
+              : null}
+          </Map>
         ) : (
           'Please share your location to use this app!'
         )}
       </div>
+
+      <div id="tempMap" />
     </div>
   )
 }

@@ -7,7 +7,7 @@ import {connect} from 'react-redux'
  * COMPONENT
  */
 export const UserHome = props => {
-  const {id, username} = props
+  const {username} = props
   const history = useHistory()
 
   return (
@@ -15,9 +15,7 @@ export const UserHome = props => {
       <h3>Welcome Back, {username}</h3>
       <div className="home">
         <button>I need items</button>
-        <button onClick={() => history.push(`/build-list/${id}`)}>
-          I want to buy for others
-        </button>
+        <button>I want to buy for others</button>
         <button>Review my trips</button>
       </div>
     </div>
@@ -29,7 +27,6 @@ export const UserHome = props => {
  */
 const mapState = state => {
   return {
-    id: state.user.id,
     username: state.user.username
   }
 }

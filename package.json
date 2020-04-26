@@ -46,6 +46,7 @@
     "connect-session-sequelize": "^6.1.1",
     "express": "^4.16.4",
     "express-session": "^1.17.1",
+    "google-maps-react": "^2.0.6",
     "history": "^4.10.1",
     "morgan": "^1.10.0",
     "passport": "^0.4.1",

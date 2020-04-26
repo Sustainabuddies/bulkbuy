@@ -64,7 +64,8 @@ export const Trips = props => {
   ]
 
   const handleClick = trip => {
-    console.log(trip)
+    // PENDING: for view purposes, redirect with handling of mock data?
+    history.push('/home')
   }
 
   return (

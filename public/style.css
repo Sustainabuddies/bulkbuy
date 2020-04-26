@@ -105,3 +105,29 @@ button:hover {
 .add-btn:hover {
   background-color: seagreen;
 }
+  
+  /* Trips Component */
+#trip-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#trip-store {
+  display: flex;
+  align-self: flex-start;
+}
+
+.trip-header {
+  display: flex;
+  flex-direction: row;
+}
+
+.active-trip,
+.completed-trip {
+  text-align: center;
+}
+
+.completed-trip {
+  color: green;
+}

@@ -42,7 +42,7 @@ button {
 }
 
 button:hover {
-  background-color: rgb(218, 216, 216);
+  background-color: blue;
 }
 
 /* LOGIN / SIGNUP */
@@ -51,9 +51,62 @@ button:hover {
   flex-direction: column;
 }
 
-/* Trips Component */
-
 /* GROCERY LIST */
+#list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 32px;
+}
+
+#list-store {
+  display: flex;
+  align-self: flex-start;
+}
+
+#list-item-form {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+
+.list-header {
+  display: flex;
+  flex-direction: row;
+}
+
+.list-item {
+  text-align: center;
+}
+
+.saved-item {
+  color: gray;
+}
+
+.change-item-btn {
+  padding: 0;
+  height: 50px;
+  width: 50px;
+  border-radius: 100%;
+}
+
+.remove-btn {
+  background-color: lightgray;
+}
+
+.remove-btn:hover {
+  background-color: darkred;
+}
+
+.add-btn {
+  background-color: green;
+}
+
+.add-btn:hover {
+  background-color: seagreen;
+}
+  
+  /* Trips Component */
 #trip-container {
   display: flex;
   flex-direction: column;

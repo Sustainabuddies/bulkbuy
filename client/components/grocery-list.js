@@ -8,29 +8,21 @@ import {connect} from 'react-redux'
  */
 export const GroceryList = props => {
   // const {storeName} = props
-  // const onGroceryChange = () => {
-  //   console.log(
-  //     `Item added! Name: ${item.name} for ${item.itemTotalQty} in ${item.itemUnit} units with  ${item.itemAvailableQty} available to subscribers`
-  //   )
-  //   console.log(
-  //     `Items on current list! ${items}`
-  //   )
-  // };
   const {
     item,
     items,
     handleChange,
-    handleChangeButton,
+    handleRemoveButton,
+    handleAddButton,
     handleSubmit
   } = changeToGroceryForm()
-  console.log('Item changing: ', item, ', All items: ', items)
 
   let mockStoreName = 'Costco'
 
   return (
     <div id="list-container">
       <h3 id="list-store">{mockStoreName} List</h3>
-      <form id="list-form" onSubmit={handleSubmit}>
+      <form id="list-item-form" onSubmit={handleAddButton}>
         <table>
           <tbody>
             <tr id="list-header">
@@ -53,7 +45,7 @@ export const GroceryList = props => {
                       name="remove-item"
                       index={idx}
                       className="change-item-btn remove-btn"
-                      onClick={e => handleChangeButton(e)}
+                      onClick={e => handleRemoveButton(e)}
                     >
                       -
                     </button>
@@ -102,10 +94,9 @@ export const GroceryList = props => {
               </td>
               <td>
                 <button
-                  type="button"
+                  type="submit"
                   name="add-item"
                   className="change-item-btn add-btn"
-                  onClick={e => handleChangeButton(e)}
                 >
                   +
                 </button>
@@ -113,7 +104,11 @@ export const GroceryList = props => {
             </tr>
           </tbody>
         </table>
-        <button type="submit">Submit</button>
+      </form>
+      <form id="list-form">
+        <button type="submit" onSubmit={handleSubmit}>
+          Submit
+        </button>
       </form>
     </div>
   )

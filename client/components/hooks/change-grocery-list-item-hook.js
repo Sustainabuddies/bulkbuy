@@ -1,6 +1,9 @@
 import {useState} from 'react'
+import {useHistory} from 'react-router-dom'
 
 const changeToGroceryForm = () => {
+  const history = useHistory()
+
   let mockListItems = [
     {
       name: 'Toilet Paper',
@@ -29,6 +32,7 @@ const changeToGroceryForm = () => {
   const handleSubmit = event => {
     if (event) {
       event.preventDefault()
+      history.push('/home')
     }
   }
 
@@ -40,27 +44,31 @@ const changeToGroceryForm = () => {
         [event.target.name]: event.target.value
       }
     })
-    console.log(item)
   }
 
-  const handleChangeButton = event => {
+  const handleRemoveButton = event => {
     if (event) {
-      if (event.target.name === 'add-item') {
-        setItems([...items, item])
-        setItem(defaultItem)
-      } else if (event.target.name === 'remove-item') {
-        let index = event.target.getAttribute('index')
-        let splicedItems = [...items]
-        splicedItems.splice(index, 1)
-        setItems(splicedItems)
-      }
+      event.preventDefault()
+      let index = event.target.getAttribute('index')
+      let splicedItems = [...items]
+      splicedItems.splice(index, 1)
+      setItems(splicedItems)
+    }
+  }
+
+  const handleAddButton = event => {
+    if (event) {
+      event.preventDefault()
+      setItems([...items, item])
+      setItem(defaultItem)
     }
   }
 
   return {
     handleSubmit,
     handleChange,
-    handleChangeButton,
+    handleRemoveButton,
+    handleAddButton,
     item,
     items
   }

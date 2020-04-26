@@ -63,7 +63,7 @@ button:hover {
   align-self: flex-start;
 }
 
-#list-form {
+#list-item-form {
   display: flex;
   flex-direction: column;
   align-content: center;

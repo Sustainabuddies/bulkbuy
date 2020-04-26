@@ -1,8 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User} = require('../server/db/models')
-const {Trip} = require('../server/db/models')
+const {User, Trip, Rating, ListItem} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -46,7 +45,8 @@ async function seed() {
           storeName: 'Costco',
           storeLatitude: 40.715435,
           storeLongitude: -73.965895,
-          tripDate: new Date()
+          tripDate: new Date(),
+          buyerId: 1
         },
         {
           exchangePointLatitude: 40.794349,
@@ -54,7 +54,8 @@ async function seed() {
           storeName: 'BJs',
           storeLatitude: 40.719078,
           storeLongitude: -74.010613,
-          tripDate: new Date()
+          tripDate: new Date(),
+          buyerId: 2
         }
       ],
       {returning: true}
@@ -64,12 +65,83 @@ async function seed() {
   const trip1 = trips[0][0]
   const trip2 = trips[0][1]
 
-  await trip1.setBuyer(user1)
+  const ratings = await Promise.all([
+    Rating.bulkCreate(
+      [
+        {
+          rating: 5,
+          userId: 1,
+          raterId: 2
+        },
+        {
+          rating: 1,
+          userId: 2,
+          raterId: 1
+        }
+      ],
+      {returning: true}
+    )
+  ])
+
   await trip1.addSubscriber(user2)
-  await trip2.setBuyer(user2)
   await trip2.addSubscriber(user1)
 
-  console.log(`seeded ${users.length} users, ${trips.length} trips`)
+  const listItems = await Promise.all([
+    ListItem.bulkCreate([
+      {
+        tripId: 1,
+        userId: 1,
+        type: 'buyer',
+        name: 'toilet paper',
+        price: 0.84,
+        qtyAvailable: 5,
+        qtyTotal: 5,
+        unitType: 'pack',
+        isAccepted: 'approved'
+      },
+      {
+        tripId: 1,
+        userId: 2,
+        type: 'subscriber',
+        name: 'toilet paper',
+        price: 0.84,
+        qtyAvailable: 0,
+        qtyTotal: 5,
+        unitType: 'pack',
+        isAccepted: 'approved',
+        amountDue: 4.2
+      },
+      {
+        tripId: 2,
+        userId: 2,
+        type: 'buyer',
+        name: 'water bottle',
+        price: 0.84,
+        qtyAvailable: 5,
+        qtyTotal: 5,
+        unitType: 'single',
+        isAccepted: 'approved'
+      },
+      {
+        tripId: 2,
+        userId: 1,
+        type: 'subscriber',
+        name: 'water bottle',
+        price: 0.84,
+        qtyAvailable: 0,
+        qtyTotal: 5,
+        unitType: 'single',
+        isAccepted: 'approved',
+        amountDue: 4.2
+      }
+    ])
+  ])
+
+  console.log(
+    `seeded ${users.length} users, ${trips.length} trips, ${
+      ratings.length
+    } ratings, ${listItems.length} list items`
+  )
   console.log(`seeded successfully`)
 }
 

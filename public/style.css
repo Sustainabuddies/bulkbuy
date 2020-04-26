@@ -105,10 +105,3 @@ button:hover {
 .add-btn:hover {
   background-color: seagreen;
 }
-
-#list-form {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  width: 80%;
-}

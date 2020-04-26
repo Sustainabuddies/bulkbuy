@@ -32,12 +32,11 @@ form div {
 }
 
 button {
-  max-width: 25%;
-  margin: 1em;
-  padding: 2em;
-  background-color: white;
-  border-radius: 3em;
-  border: 1px solid black;
+  margin: 16px;
+  padding: 16px;
+  border-radius: 5px;
+  background-color: darkblue;
+  color: white;
   cursor: pointer;
   font-size: 16px;
 }
@@ -50,4 +49,60 @@ button:hover {
 #form-elements {
   display: flex;
   flex-direction: column;
+}
+
+/* GROCERY LIST */
+#list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#list-store {
+  display: flex;
+  align-self: flex-start;
+}
+
+#list-form {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  margin: 32px;
+  width: 80%;
+}
+
+.list-header {
+  display: flex;
+  flex-direction: row;
+}
+
+.list-item {
+  text-align: center;
+}
+
+.saved-item {
+  color: gray;
+}
+
+.change-item-btn {
+  padding: 0;
+  height: 50px;
+  width: 50px;
+  border-radius: 100%;
+}
+
+.remove-btn {
+  background-color: lightgray;
+}
+
+.remove-btn:hover {
+  background-color: darkred;
+}
+
+.add-btn {
+  background-color: green;
+}
+
+.add-btn:hover {
+  background-color: seagreen;
 }

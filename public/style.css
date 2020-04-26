@@ -42,7 +42,7 @@ button {
 }
 
 button:hover {
-  background-color: rgb(218, 216, 216);
+  background-color: blue;
 }
 
 /* LOGIN / SIGNUP */
@@ -56,6 +56,7 @@ button:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 32px;
 }
 
 #list-store {
@@ -66,8 +67,6 @@ button:hover {
 #list-item-form {
   display: flex;
   flex-direction: column;
-  align-content: center;
-  margin: 32px;
   width: 80%;
 }
 
@@ -105,4 +104,11 @@ button:hover {
 
 .add-btn:hover {
   background-color: seagreen;
+}
+
+#list-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 80%;
 }

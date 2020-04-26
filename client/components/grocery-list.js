@@ -106,7 +106,7 @@ export const GroceryList = props => {
         </table>
       </form>
       <form id="list-form">
-        <button type="submit" onSubmit={handleSubmit}>
+        <button id="submit-list-btn" type="submit" onSubmit={handleSubmit}>
           Submit
         </button>
       </form>

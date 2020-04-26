@@ -96,7 +96,7 @@ async function seed() {
         price: 0.84,
         qtyAvailable: 5,
         qtyTotal: 5,
-        unitType: 'rolls',
+        unitType: 'pack',
         isAccepted: 'approved'
       },
       {
@@ -107,7 +107,7 @@ async function seed() {
         price: 0.84,
         qtyAvailable: 0,
         qtyTotal: 5,
-        unitType: 'rolls',
+        unitType: 'pack',
         isAccepted: 'approved',
         amountDue: 4.2
       },
@@ -119,7 +119,7 @@ async function seed() {
         price: 0.84,
         qtyAvailable: 5,
         qtyTotal: 5,
-        unitType: 'bottles',
+        unitType: 'single',
         isAccepted: 'approved'
       },
       {
@@ -130,7 +130,7 @@ async function seed() {
         price: 0.84,
         qtyAvailable: 0,
         qtyTotal: 5,
-        unitType: 'bottles',
+        unitType: 'single',
         isAccepted: 'approved',
         amountDue: 4.2
       }

@@ -38,14 +38,6 @@ const SelectExchangePoint = props => {
   }
 
   const onMapClick = (t, map, coord) => {
-    // const tempMap = new google.maps.Map(document.getElementById('tempMap'))
-    // const search = new google.maps.places.PlacesService(tempMap)
-    // search.findPlaceFromQuery(
-    //   {
-    //     query: [location],
-    //   },
-    //   (response, status) => console.log('response', response.slice(0, 3))
-    // )
     const {latLng} = coord
     const lat = latLng.lat()
     const lng = latLng.lng()
